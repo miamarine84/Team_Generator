@@ -51,10 +51,9 @@ var questions = [
 
   
   inquirer.prompt(questions).then((answers) => {
-    console.log(answers, 'line 48')
     let jsonFirst = JSON.stringify(answers, null, '  ');
     jsonParse = JSON.parse(jsonFirst)
-    console.log(jsonParse, 'line 57')
+
 
     if(jsonParse.role == 'intern'){
       var moreQuestions = [
@@ -66,17 +65,11 @@ var questions = [
       ]
       inquirer.prompt(moreQuestions).then((thisAnswer) => {
         console.log(thisAnswer, 'thisanswer');
-        thisAnswer = JSON.stringify(thisAnswer);
-        thisAnswer = JSON.parse(thisAnswer)
-        console.log(thisAnswer)
         jsonParse = {
           ...thisAnswer,
           ...jsonParse
         }
         console.log(jsonParse)
-        // jsonParse += jsonFirst
-        // console.log(jsonParse, 'jsonparse')
-
       }
       )
 
