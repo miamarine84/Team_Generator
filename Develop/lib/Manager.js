@@ -1,3 +1,4 @@
 // TODO: Write code to define and export the Manager class. HINT: This class should inherit from Employee.
-// import { questions } from '../app'
+import { sayName } from '../app.js';
 
+sayName()

@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "Team Generator project",
   "main": "app.js",
+  "type": "module",
   "directories": {
     "lib": "lib",
     "test": "test"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "type": "module"
+    
   },
   "author": "Marcos Patrocinio",
   "license": "ISC",
