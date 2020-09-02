@@ -1,5 +1,20 @@
 // TODO: Write code to define and export the Intern class.  HINT: This class should inherit from Employee.
-// const fs = require('fs')
-// import jsonParse from './app'
+const Employee = require("./employee");
 
-// console.log(jsonParse)
+class Intern extends Employee {
+  constructor(name, id, email, school) {
+    super(name, id, email);
+
+    this.school = school;
+  }
+
+  getSchool() {
+    return this.school;
+  }
+
+  getRole() {
+    return "Intern";
+  }
+}
+
+module.exports = Intern;
