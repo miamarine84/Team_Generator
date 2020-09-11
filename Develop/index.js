@@ -60,7 +60,6 @@ function programStart() {
 				
 				)
 				members.push(internData)
-				console.log(internData)
 
 				restartInquirer()
 
@@ -81,7 +80,6 @@ function programStart() {
 					answers.email,
 					answers.role
 				)
-				console.log(engineerData)
 
 				members.push(engineerData)
 				restartInquirer();
