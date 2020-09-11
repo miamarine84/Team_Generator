@@ -9,7 +9,8 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-const { runInThisContext } = require("vm");
+
+let members = [];
 
 var questions = [
 	{
@@ -38,93 +39,113 @@ var questions = [
 
 
 
-inquirer.prompt(questions).then((answers) => {
-	// let jsonFirst = JSON.stringify(answers, null, '  ');
-	// jsonParse = JSON.parse(jsonFirst)
-	console.log(answers, '44')
-	if (answers.role == 'Intern') {
-		var moreQuestions = [
-			{
-				type: 'input',
-				name: 'school',
-				message: 'What is your school name?',
-			},
-		]
-		inquirer.prompt(moreQuestions).then((thisAnswer) => {
+function programStart() {
+	inquirer.prompt(questions).then((answers) => {
+		if (answers.role == 'Intern') {
+			var moreQuestions = [
+				{
+					type: 'input',
+					name: 'school',
+					message: 'What is your school name?',
+				},
+			]
+			inquirer.prompt(moreQuestions).then((thisAnswer) => {
 
 
-			const internData =  new Intern(
-				answers.name,
-				answers.id,
-				answers.email,
-				answers.role,
-				thisAnswer
+				const internData = new Intern(
+					answers.name,
+					answers.id,
+					answers.email,
+					answers.role,
+				
+				)
+				members.push(internData)
+				console.log(internData)
+
+				restartInquirer()
+
+			})
+
+		} else if (answers.role == 'Engineer') {
+			var moreQuestions = [
+				{
+					type: 'input',
+					name: 'github',
+					message: 'What is your github username?',
+				},
+			]
+			inquirer.prompt(moreQuestions).then((thisAnswer) => {
+				const engineerData = new Engineer(
+					answers.name,
+					answers.id,
+					answers.email,
+					answers.role
+				)
+				console.log(engineerData)
+
+				members.push(engineerData)
+				restartInquirer();
+
+			}
+
 			)
-			console.log(answers.role)
-			console.log(internData)
 
-		})
+		} else {
+			var moreQuestions = [
+				{
+					type: 'input',
+					name: 'officeNumber',
+					message: 'What is your office number?',
+				},
+			]
+			inquirer.prompt(moreQuestions).then((thisAnswer) => {
 
-	} else if (answers.role == 'Engineer') {
-		var moreQuestions = [
-			{
-				type: 'input',
-				name: 'github',
-				message: 'What is your github username?',
-			},
-		]
-		inquirer.prompt(moreQuestions).then((thisAnswer) => {
-			const engineerData =  new Engineer(
-				answers.name,
-				answers.id,
-				answers.email,
-				thisAnswer.github
+				const managerData = new Manager(
+					answers.name,
+					answers.id,
+					answers.email,
+					thisAnswer.officeNumber
+				)
+
+				members.push(managerData)
+				restartInquirer();
+			}
 			)
-			console.log(engineerData)
 
-		}
-
-		)
-
-	} else {
-		var moreQuestions = [
-			{
-				type: 'input',
-				name: 'officeNumber',
-				message: 'What is your office number?',
-			},
-		]
-		inquirer.prompt(moreQuestions).then((thisAnswer) => {
-
-			const manager = new Manager (
-				answers.name,
-				answers.id,
-				answers.email,
-				thisAnswer.officeNumber
-			)
-			console.log(manager)
-
-		}
-		)
-
-	}
-
-
-});
-
-function restartInquirer() {
-	inquirer.prompt(questions.newQuestion).then(answer => {
-		switch (answer.role) {
-			case "YES!!!":
-				createEmployee();
-				break;
-
-			case "NOPE, THATS EVERYONE!":
-				createHTML();
-				break;
 		}
 	});
 }
+
+
+
+	const newQuestion = [
+		{
+			type: "list",
+			message: "Would you like to add a team member?",
+			name: "role",
+			choices: ["YES!!!", "NOPE, THATS EVERYONE!"]
+		}
+	];
+	function restartInquirer() {
+		inquirer.prompt(newQuestion).then(answer => {
+			switch (answer.role) {
+				case "YES!!!":
+					programStart();
+					break;
+
+				case "NOPE, THATS EVERYONE!":
+					buildFile()
+					break;
+			}
+		});
+	}
+
+	function buildFile(){
+		if(!fs.existsSync(OUTPUT_DIR)){
+			fs.mkdirSync(OUTPUT_DIR)
+		}
+		fs.writeFileSync(outputPath, render(members))
+	}
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -148,3 +169,4 @@ function restartInquirer() {
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ``
+programStart();
