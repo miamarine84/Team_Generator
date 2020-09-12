@@ -9,9 +9,10 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-
+// member array is the item we will push in to our HTML in the buildFile function in the end.
 let members = [];
 
+// Questions prompt for user
 var questions = [
 	{
 		type: 'input',
@@ -38,7 +39,7 @@ var questions = [
 ]
 
 
-
+// in these if statetements we differintiate between intern, manager, or engineer and build a new object each time that we then push in to our members array on top.
 function programStart() {
 	inquirer.prompt(questions).then((answers) => {
 		if (answers.role == 'Intern') {
@@ -115,7 +116,7 @@ function programStart() {
 }
 
 
-
+// Portion where we either ask the question to continue with adding more users or to actually build the file
 	const newQuestion = [
 		{
 			type: "list",
