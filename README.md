@@ -8,11 +8,11 @@
 - [Employee](##Employee)
 - [Description](#Description)
 - [About](#About)
-- [Installation / Usage](#Installation)
+- [Installation / Usage](#Installation/Usage)
 - [Built with](#Built)
 
 ## Test 
-![Image](Assets\Presentation.gif)
+![Image](/Presentation.gif)
 
 Click on this link to view as well https://drive.google.com/file/d/1pdfjdQTngTBbbKruB6vnipUYRIjtKJvO/view
 
@@ -35,7 +35,7 @@ Managers will display their office phone numbers
 ## About
 This is is built with .js, node.js, and npm packages.
 
-## Installation / Usage
+## Installation/Usage
 clone to your device, open in you code editor and run command 'npm install'. Check package.json for npm packages. run 'node index.js'. The command line will prompt you for input from there.
 
 ## Built with: 
